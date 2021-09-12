@@ -1,0 +1,79 @@
+<?xml version="1.0" ?>
+<robot name="raspicat" xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- =============== Link & Joint =============== -->
+  <!-- Base -->
+  <link name="base_link"/>
+
+  <joint name="base_joint" type="fixed">
+    <origin xyz="0 0 0.010"/>
+    <parent link="base_link"/>
+    <child link="base_link_2"/>
+  </joint>
+
+  <link name="base_link_2">
+    <visual>
+      <geometry>
+        <mesh filename="package://raspicat/meshes/bases/raspberry_pi_cat.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="light_black">
+        <color rgba="0.4 0.4 0.4 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="left-wheel_joint" type="continuous">
+    <origin xyz="0 0.14 0.0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <parent link="base_link_2"/>
+    <child link="left-wheel"/>
+  </joint>
+
+  <link name="left-wheel">
+    <visual>
+      <origin xyz="0 -0.04 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://raspicat/meshes/wheel/raspberry_pi_cat_wheel_left.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="light_black">
+          <color rgba="0.4 0.4 0.4 1.0"/>
+        </material>
+    </visual>
+  </link>
+
+  <joint name="right-wheel_joint" type="continuous">
+    <origin xyz="0 -0.14 0.0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <parent link="base_link_2"/>
+    <child link="right-wheel"/>
+  </joint>
+
+  <link name="right-wheel">
+    <visual>
+      <origin xyz="0 -0.04 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://raspicat/meshes/wheel/raspberry_pi_cat_wheel_right.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="light_black">
+          <color rgba="0.4 0.4 0.4 1.0"/>
+        </material>
+    </visual>
+  </link>
+
+  <link name="imu_link"/>
+
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_link_2"/>
+    <child link="imu_link"/>
+    <origin xyz="0.0 0.0 0.0762" rpy="0 0 0"/>
+  </joint>
+
+
+  <joint name="urg_joint" type="fixed">
+    <parent link="base_link_2"/>
+    <child link="urg_lrf_link"/>
+    <origin xyz="0.12 0.0 -0.08" rpy="0 0 0"/>
+  </joint>
+
+  <link name="urg_lrf_link"/>
+
+</robot>

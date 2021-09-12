@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="open_rviz" default="true"/>
+  <arg name="multi_robot_name" default=""/>
+
+  <include file="$(find raspicat)/launch/include/description.launch.xml"/>
+
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    <!-- <param name="publish_frequency" type="double" value="50.0" /> -->
+    <!-- <param name="tf_prefix" value="$(arg multi_robot_name)"/> -->
+  </node>
+
+  <node pkg="tf" type="static_transform_publisher" name="raspicat_lrf_tf_broadcaster" args="0.144 0.0 0.04 0 0 0 /base_link /urg_lrf_link 100" />
+
+   <!-- motor ON -->
+  <node pkg="raspicat" name="motor_start"
+    type="motor_start.py" required="true" output="screen">
+  </node>
+
+   <!-- rviz -->
+  <group if="$(arg open_rviz)"> 
+    <node pkg="rviz" type="rviz" name="rviz" required="true"
+	   args="-d $(find raspicat)/urdf/raspicat.rviz">
+    </node>      
+  </group>
+
+
+</launch>
